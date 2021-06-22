@@ -2,9 +2,10 @@ package com.example.codeclan.employees;
 
 import com.example.codeclan.employees.models.Department;
 import com.example.codeclan.employees.models.Employee;
+import com.example.codeclan.employees.models.Project;
 import com.example.codeclan.employees.repositories.DepartmentRepository;
 import com.example.codeclan.employees.repositories.ProjectRepository;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,20 +28,31 @@ public class EmployeesApplicationTests {
 	ProjectRepository projectRepository;
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 	@Test
-	void createEmployee() {
-
-		ArrayList<Employee> employees = new ArrayList<>();
+	public void createEmployee() {
 
 		Department department = new Department("Lunch");
 		departmentRepository.save(department);
 
-		Employee employeeTwo = new Employee("Van", "Gough", "55500FFG6", department);
+		Employee employee = new Employee("Bob", "Harris", "55500FFG6", department);
+		employeeRepository.save(employee);
+	}
+
+	@Test
+	public void addEmployeesAndProject(){
+		Department department = new Department("Lunch");
+		departmentRepository.save(department);
 
 		Employee employee = new Employee("Bob", "Harris", "55500FFG6", department);
 		employeeRepository.save(employee);
+
+		Project project = new Project("Sandwich", 4);
+		projectRepository.save(project);
+
+		project.addEmployee(employee);
+		projectRepository.save(project);
 	}
 }

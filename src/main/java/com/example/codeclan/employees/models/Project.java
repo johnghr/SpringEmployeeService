@@ -32,13 +32,13 @@ public class Project {
                     updatable = false)
             },
             inverseJoinColumns = { @JoinColumn(
-                    name = "pirate_id",
+                    name = "employee_id",
                     nullable = false,
                     updatable = false)
             })
     private List<Employee> employees;
 
-    public Project(String name, int numberOfDays, List<Employee> employees) {
+    public Project(String name, int numberOfDays) {
         this.name = name;
         this.numberOfDays = numberOfDays;
         this.employees = new ArrayList<>();
@@ -77,5 +77,9 @@ public class Project {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public void addEmployee(Employee employee) {
+        this.employees.add(employee);
     }
 }
