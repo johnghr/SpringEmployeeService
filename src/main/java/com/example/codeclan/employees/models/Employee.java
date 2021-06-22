@@ -1,6 +1,10 @@
 package com.example.codeclan.employees.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "employees")
@@ -8,26 +12,55 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+//    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "employee_number")
     private String employeeNumber;
 
-    @Column(name = "email")
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    @JsonIgnoreProperties({"employees"})
+    private Department department;
 
-    public Employee(String name, int age, String employeeNumber, String email) {
-        this.name = name;
-        this.age = age;
+    @ManyToMany
+    @JsonIgnoreProperties({"employees"})
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name = "employees_projects",
+            joinColumns = { @JoinColumn (
+                    name = "employee_id",
+                    nullable = false,
+                    updatable = false
+            )},
+            inverseJoinColumns = { @JoinColumn(
+                    name = "project_id",
+                    nullable = false,
+                    updatable = false
+            )}
+    )
+
+    private List<Project> projects;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Employee(String firstName, String lastName, String employeeNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName
         this.employeeNumber = employeeNumber;
-        this.email = email;
+        this.projects = new ArrayList<>();
     }
 
     public Employee() {
@@ -41,20 +74,12 @@ public class Employee {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmployeeNumber() {
@@ -65,11 +90,19 @@ public class Employee {
         this.employeeNumber = employeeNumber;
     }
 
-    public String getEmail() {
-        return email;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 }

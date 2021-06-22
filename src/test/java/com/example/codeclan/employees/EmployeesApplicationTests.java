@@ -16,9 +16,9 @@ class EmployeesApplicationTests {
 	void contextLoads() {
 	}
 
-	@Test
-	void createEmployee() {
-		Employee employee = new Employee("Bob", 72, "55500FFG6", "hotmale@hotmail.com");
-		employeeRepository.save(employee);
-	}
+//	@Test
+//	void createEmployee() {
+//		Employee employee = new Employee("Bob", "Harris", "55500FFG6", department);
+//		employeeRepository.save(employee);
+//	}
 }
