@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -56,10 +57,11 @@ public class Employee {
         this.firstName = firstName;
     }
 
-    public Employee(String firstName, String lastName, String employeeNumber) {
+    public Employee(String firstName, String lastName, String employeeNumber, Department department) {
         this.firstName = firstName;
-        this.lastName = lastName
+        this.lastName = lastName;
         this.employeeNumber = employeeNumber;
+        this.department = department;
         this.projects = new ArrayList<>();
     }
 

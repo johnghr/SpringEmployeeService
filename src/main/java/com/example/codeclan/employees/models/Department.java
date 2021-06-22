@@ -3,6 +3,7 @@ package com.example.codeclan.employees.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,9 +22,9 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Employee> employees;
 
-    public Department(String name, List<Employee> employees) {
+    public Department(String name) {
         this.name = name;
-        this.employees = employees;
+        this.employees = new ArrayList<>();
     }
 
     public Department() {
